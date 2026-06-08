@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TripCrew Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" aria-label="TripCrew prototype">
+      <section class="phone-frame">
+        <header class="topbar">
+          <button class="icon-button" type="button" aria-label="Back" data-action="back-home">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <div>
+            <p class="eyebrow">TripCrew</p>
+            <h1>CDMX Weekend</h1>
+            <p class="subtle">May 16-18 · 4 friends</p>
+          </div>
+          <button class="icon-button" type="button" aria-label="More options" data-action="show-more">
+            <span aria-hidden="true">•••</span>
+          </button>
+        </header>
+
+        <nav class="tabbar" aria-label="Prototype screens">
+          <button class="tab active" data-view="home" type="button">Today</button>
+          <button class="tab" data-view="profiles" type="button">People</button>
+          <button class="tab" data-view="adapt" type="button">Adapt</button>
+          <button class="tab" data-view="regroup" type="button">Regroup</button>
+          <button class="tab" data-view="budget" type="button">Budget</button>
+        </nav>
+
+        <section class="view active" id="home">
+          <div class="friend-strip" aria-label="Traveler status">
+            <article class="friend you">
+              <div class="avatar">W</div>
+              <strong>You</strong>
+              <span>Food-first</span>
+            </article>
+            <article class="friend">
+              <div class="avatar green">D</div>
+              <strong>Diego</strong>
+              <span>Exploring</span>
+            </article>
+            <article class="friend">
+              <div class="avatar blue">M</div>
+              <strong>Maya</strong>
+              <span>Not feeling well</span>
+            </article>
+            <article class="friend">
+              <div class="avatar violet">A</div>
+              <strong>Alex</strong>
+              <span>Down for anything</span>
+            </article>
+          </div>
+
+          <div class="comfort-row">
+            <button class="chip active-chip" type="button" data-filter="pace">Pace: balanced</button>
+            <button class="chip" type="button" data-filter="food">Food: adventurous</button>
+            <button class="chip" type="button" data-filter="budget">Budget: moderate</button>
+          </div>
+
+          <article class="map-card">
+            <img src="assets/cdmx-map.png" alt="Stylized map of Mexico City neighborhoods" />
+            <div class="map-copy">
+              <span>Roma → Condesa → Coyoacan</span>
+              <button type="button" data-jump="regroup">Open map plan</button>
+            </div>
+          </article>
+
+          <article class="alert-card">
+            <div class="alert-avatar">M</div>
+            <div>
+              <h2>Maya’s stomach feels off</h2>
+              <p>Slow plan suggested before the museum day gets too ambitious.</p>
+              <div class="split-actions">
+                <button class="primary" type="button" data-jump="adapt">Vote on slower plan</button>
+                <button class="secondary" type="button" data-jump="regroup">Split up & regroup</button>
+              </div>
+            </div>
+          </article>
+
+          <section class="timeline">
+            <div class="section-heading">
+              <h2>Today’s plan</h2>
+              <span>Fri, May 16</span>
+            </div>
+            <article class="timeline-item">
+              <time>10:00</time>
+              <div>
+                <h3>Cafe & breakfast in Roma</h3>
+                <p>Cafe Avellaneda · card friendly</p>
+              </div>
+              <span class="cost">$18</span>
+            </article>
+            <article class="timeline-item">
+              <time>12:00</time>
+              <div>
+                <h3>Walk & street art in Condesa</h3>
+                <p>Low effort · good if Maya joins late</p>
+              </div>
+              <span class="cost">$0</span>
+            </article>
+            <article class="timeline-item dimmed">
+              <time>14:30</time>
+              <div>
+                <h3>Museum block</h3>
+                <p>At risk · 45 min walk, moderate pace</p>
+              </div>
+              <span class="risk">Maybe</span>
+            </article>
+          </section>
+
+          <article class="budget-card">
+            <div>
+              <p>Group spend</p>
+              <strong>$6,450 MXN</strong>
+            </div>
+            <div>
+              <p>Cash left</p>
+              <strong>$2,150 MXN</strong>
+            </div>
+            <div class="meter" aria-label="67 percent budget remaining">
+              <span style="width: 67%"></span>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="profiles">
+          <div class="section-heading">
+            <h2>Traveler profiles</h2>
+            <button class="text-button" type="button" data-action="invite">Invite</button>
+          </div>
+          <div class="profile-list"></div>
+          <article class="prompt-card">
+            <h3>Missing input</h3>
+            <p>Alex has not picked a must-do yet. Nudge them so the plan does not become one person’s best guess.</p>
+            <button class="primary wide" type="button" data-action="nudge">Send gentle nudge</button>
+          </article>
+        </section>
+
+        <section class="view" id="adapt">
+          <article class="chat-thread" aria-label="Adaptive plan conversation">
+            <div class="bubble maya">
+              <strong>Maya</strong>
+              <p>Woke up with stomach issues. Not sure I can do a big day out.</p>
+            </div>
+            <div class="bubble diego">
+              <strong>Diego</strong>
+              <p>I still want to check out the museum and Roma Norte.</p>
+            </div>
+            <div class="bubble assistant">
+              <strong>TripCrew</strong>
+              <p>Got it. Here are two ways to make today work for everyone.</p>
+            </div>
+          </article>
+
+          <div class="plan-list">
+            <article class="plan-card selected" data-plan="slower">
+              <div class="plan-badge">Slower plan</div>
+              <h2>Chill CDMX day</h2>
+              <p>Cafes, Parque Mexico, bookstores, light strolling in Roma.</p>
+              <dl class="stats">
+                <div><dt>Cost</dt><dd>$18</dd></div>
+                <div><dt>Walk</dt><dd>25m</dd></div>
+                <div><dt>Transit</dt><dd>15m</dd></div>
+                <div><dt>Pace</dt><dd>Slow</dd></div>
+              </dl>
+              <p class="best-for">Best for: Maya, Wendy</p>
+            </article>
+            <article class="plan-card" data-plan="explorer">
+              <div class="plan-badge purple">Explorer plan</div>
+              <h2>Museum + Roma Norte</h2>
+              <p>Palacio de Bellas Artes, San Carlos, lunch in Roma Norte.</p>
+              <dl class="stats">
+                <div><dt>Cost</dt><dd>$28</dd></div>
+                <div><dt>Walk</dt><dd>45m</dd></div>
+                <div><dt>Transit</dt><dd>25m</dd></div>
+                <div><dt>Pace</dt><dd>Moderate</dd></div>
+              </dl>
+              <p class="best-for">Best for: Diego, Alex</p>
+            </article>
+          </div>
+
+          <section class="decision-box">
+            <h2>What should we do?</h2>
+            <div class="reaction-row">
+              <button class="reaction active" type="button">Love</button>
+              <button class="reaction" type="button">Works</button>
+              <button class="reaction" type="button">Too much</button>
+            </div>
+            <button class="primary wide" type="button" data-action="choose-plan" data-jump="home">Choose slower plan</button>
+          </section>
+        </section>
+
+        <section class="view" id="regroup">
+          <article class="map-card tall">
+            <img src="assets/cdmx-map.png" alt="Stylized regrouping map of Mexico City" />
+            <div class="map-copy stacked">
+              <span>Meet at Parque Mexico · 4:10 PM</span>
+              <p>Best midpoint before dinner. Everyone has under 18 min transit.</p>
+            </div>
+          </article>
+
+          <section class="regroup-list">
+            <article class="regroup-card">
+              <div class="avatar">W</div>
+              <div>
+                <h3>Shopping + cafe</h3>
+                <p>Roma Norte · back by 4:00</p>
+              </div>
+              <span>12m away</span>
+            </article>
+            <article class="regroup-card">
+              <div class="avatar blue">M</div>
+              <div>
+                <h3>Rest near hotel</h3>
+                <p>Low-energy route · check-in at 3:30</p>
+              </div>
+              <span>18m away</span>
+            </article>
+            <article class="regroup-card">
+              <div class="avatar green">D</div>
+              <div>
+                <h3>Museum sprint</h3>
+                <p>Centro · metro suggested</p>
+              </div>
+              <span>16m away</span>
+            </article>
+          </section>
+
+          <article class="safety-card">
+            <div>
+              <h2>Low-power check-ins</h2>
+              <p>Use periodic location pings instead of always-on tracking while everyone is split.</p>
+            </div>
+            <label class="switch">
+              <input id="lowPowerToggle" type="checkbox" checked />
+              <span></span>
+            </label>
+          </article>
+
+          <div class="split-actions bottom-actions">
+            <button class="primary" type="button" data-action="set-meetup">Set meetup</button>
+            <button class="secondary" type="button" data-action="check-in">Check in</button>
+          </div>
+        </section>
+
+        <section class="view" id="budget">
+          <div class="section-heading">
+            <h2>Budget decision</h2>
+            <span>Tonight</span>
+          </div>
+          <article class="decision-card">
+            <h2>Dinner plan tradeoff</h2>
+            <p>Everyone is hungry, Maya wants something gentle, and the group is 72% through the food budget.</p>
+            <div class="choice-grid">
+              <button class="choice active" type="button" data-choice="street">
+                <strong>Street food crawl</strong>
+                <span>$220 MXN/person · cash likely</span>
+              </button>
+              <button class="choice" type="button" data-choice="cook">
+                <strong>Groceries + cook</strong>
+                <span>$150 MXN/person · lowest cost</span>
+              </button>
+              <button class="choice" type="button" data-choice="restaurant">
+                <strong>Nice dinner</strong>
+                <span>$520 MXN/person · Wendy favorite</span>
+              </button>
+            </div>
+          </article>
+
+          <section class="breakdown">
+            <h2>Trip money snapshot</h2>
+            <div class="bar-row">
+              <span>Food</span>
+              <div class="bar"><span style="width: 72%"></span></div>
+              <strong>72%</strong>
+            </div>
+            <div class="bar-row">
+              <span>Activities</span>
+              <div class="bar"><span style="width: 44%"></span></div>
+              <strong>44%</strong>
+            </div>
+            <div class="bar-row">
+              <span>Shopping</span>
+              <div class="bar"><span style="width: 36%"></span></div>
+              <strong>36%</strong>
+            </div>
+          </section>
+
+          <article class="settle-card">
+            <h2>Cash pool</h2>
+            <p>Wendy fronted $300 USD → $5,040 MXN. Group cash remaining: $2,150 MXN.</p>
+            <button class="secondary wide" type="button" data-action="settlement">View settlement draft</button>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="sheet" aria-labelledby="sheetTitle">
+      <button class="sheet-close" type="button" aria-label="Close" data-action="close-sheet">×</button>
+      <div class="sheet-content"></div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
