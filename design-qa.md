@@ -17,6 +17,8 @@ Reference direction: hybrid of the generated chat-first adaptive itinerary conce
 - Invite, nudge, meetup, check-in, menu, and settlement draft controls now provide prototype feedback.
 - Settlement draft modal verified from the Budget screen.
 - Today itinerary now includes touch-friendly drag handles for reordering itinerary items.
+- Today itinerary includes an Add itinerary item sheet with activity, place, time, cost, category, pace, and attendance inputs.
+- Add itinerary item form verified: submitting adds a new draggable row to Today’s plan.
 - Browser console checked for errors.
 
 ## Notes

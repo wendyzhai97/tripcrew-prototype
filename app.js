@@ -116,14 +116,19 @@ function getTimelineInsertTarget(y) {
 }
 
 function renumberTimeline() {
-  const times = ["10:00", "12:00", "14:30"];
+  const existingTimes = [...timelineList.querySelectorAll("[data-itinerary-item] time")].map((time) =>
+    time.textContent.trim(),
+  );
+  const sortedTimes = existingTimes.sort((a, b) => a.localeCompare(b));
   timelineList.querySelectorAll("[data-itinerary-item]").forEach((item, index) => {
-    item.querySelector("time").textContent = times[index] || "";
+    item.querySelector("time").textContent = sortedTimes[index] || "";
   });
 }
 
-timelineList.querySelectorAll("[data-itinerary-item]").forEach((item) => {
+function attachTimelineDrag(item) {
   const handle = item.querySelector(".drag-handle");
+  if (!handle || handle.dataset.dragReady === "true") return;
+  handle.dataset.dragReady = "true";
 
   handle.addEventListener("pointerdown", (event) => {
     draggedItem = item;
@@ -156,7 +161,47 @@ timelineList.querySelectorAll("[data-itinerary-item]").forEach((item) => {
     draggedItem.classList.remove("dragging");
     draggedItem = null;
   });
-});
+}
+
+function createTimelineItem({ time, title, detail, cost, tone = "normal" }) {
+  const item = document.createElement("article");
+  item.className = `timeline-item${tone === "maybe" ? " dimmed" : ""}`;
+  item.dataset.itineraryItem = "";
+  item.innerHTML = `
+    <button class="drag-handle" type="button" aria-label="Drag ${title}">↕</button>
+    <time>${time}</time>
+    <div>
+      <h3>${title}</h3>
+      <p>${detail}</p>
+    </div>
+    <span class="${tone === "maybe" ? "risk" : "cost"}">${cost}</span>
+  `;
+  attachTimelineDrag(item);
+  return item;
+}
+
+timelineList.querySelectorAll("[data-itinerary-item]").forEach(attachTimelineDrag);
+
+function addItineraryItemFromForm(form) {
+  const data = new FormData(form);
+  const title = data.get("title")?.toString().trim() || "New stop";
+  const time = data.get("time")?.toString().trim() || "15:30";
+  const category = data.get("category")?.toString() || "activity";
+  const cost = data.get("cost")?.toString().trim() || "$0";
+  const pace = data.get("pace")?.toString() || "balanced";
+  const who = data.get("who")?.toString() || "everyone";
+  const place = data.get("place")?.toString().trim() || "Map search needed";
+  const detail = `${place} · ${category} · ${pace} pace · ${who}`;
+  const item = createTimelineItem({ time, title, detail, cost });
+  timelineList.appendChild(item);
+  const items = [...timelineList.querySelectorAll("[data-itinerary-item]")];
+  items
+    .sort((a, b) => a.querySelector("time").textContent.localeCompare(b.querySelector("time").textContent))
+    .forEach((sortedItem) => timelineList.appendChild(sortedItem));
+  sheet.close();
+  activateView("home");
+  showToast(`${title} added to today’s plan.`);
+}
 
 const profileList = document.querySelector(".profile-list");
 
@@ -199,9 +244,65 @@ document.querySelectorAll("[data-action]").forEach((button) => {
         <p>Prototype menu for the group trip workspace.</p>
         <div class="sheet-list">
           <div class="sheet-row"><div><strong>Share trip link</strong><span>Invite friends to react to plans.</span></div><em>Ready</em></div>
-          <div class="sheet-row"><div><strong>Edit trip dates</strong><span>May 16-18, Mexico City.</span></div><em>Mock</em></div>
+          <div class="sheet-row"><div><strong>Add itinerary item</strong><span>Manual entry first; map search/import later.</span></div><em>V1 flow</em></div>
           <div class="sheet-row"><div><strong>Export summary</strong><span>Send itinerary and money snapshot.</span></div><em>Mock</em></div>
         </div>
+      `);
+    }
+
+    if (action === "add-stop") {
+      openSheet(`
+        <h2>Add itinerary item</h2>
+        <p>This is how the plan starts: someone adds a stop, then the group can react, reorder, adapt, or split up around it.</p>
+        <form class="sheet-form" data-itinerary-form>
+          <label>
+            Activity
+            <input name="title" value="Churros at El Moro" />
+          </label>
+          <label>
+            Place or neighborhood
+            <input name="place" value="El Moro · Centro Historico" />
+          </label>
+          <div class="field-grid">
+            <label>
+              Time
+              <input name="time" value="16:00" />
+            </label>
+            <label>
+              Est. cost
+              <input name="cost" value="$120 MXN" />
+            </label>
+          </div>
+          <div class="field-grid">
+            <label>
+              Category
+              <select name="category">
+                <option>food</option>
+                <option>activity</option>
+                <option>shopping</option>
+                <option>transit</option>
+              </select>
+            </label>
+            <label>
+              Pace
+              <select name="pace">
+                <option>slow</option>
+                <option selected>balanced</option>
+                <option>packed</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Who wants to go?
+            <select name="who">
+              <option selected>everyone</option>
+              <option>Wendy + Diego</option>
+              <option>Maya optional</option>
+              <option>solo / split-up</option>
+            </select>
+          </label>
+          <button class="primary wide" type="submit">Add to today</button>
+        </form>
       `);
     }
 
@@ -250,4 +351,11 @@ document.querySelectorAll("[data-action]").forEach((button) => {
       sheet.close();
     }
   });
+});
+
+sheet.addEventListener("submit", (event) => {
+  const form = event.target.closest("[data-itinerary-form]");
+  if (!form) return;
+  event.preventDefault();
+  addItineraryItemFromForm(form);
 });

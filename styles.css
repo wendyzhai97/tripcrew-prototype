@@ -439,6 +439,17 @@ p {
   margin-bottom: 18px;
 }
 
+.add-stop-button {
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 6px;
+  border: 1px dashed rgba(4, 120, 77, 0.45);
+  border-radius: 17px;
+  background: rgba(230, 245, 238, 0.72);
+  color: var(--green);
+  font-weight: 900;
+}
+
 .timeline-list {
   display: grid;
 }
@@ -697,6 +708,47 @@ p {
   font-style: normal;
   font-weight: 900;
   white-space: nowrap;
+}
+
+.sheet-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sheet-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.sheet-form input,
+.sheet-form select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  color: var(--ink);
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.sheet-form input:focus,
+.sheet-form select:focus {
+  border-color: var(--rose);
+  outline: 3px solid rgba(241, 70, 114, 0.16);
 }
 
 .prompt-card {
