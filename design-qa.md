@@ -14,6 +14,8 @@ Reference direction: hybrid of the generated chat-first adaptive itinerary conce
 - Generated CDMX map asset loads successfully.
 - Main jump actions navigate between Today, Adapt, and Regroup screens.
 - Plan cards, reactions, budget choices, and low-power check-in toggle respond to clicks.
+- Invite, nudge, meetup, check-in, menu, and settlement draft controls now provide prototype feedback.
+- Settlement draft modal verified from the Budget screen.
 - Browser console checked for errors.
 
 ## Notes
