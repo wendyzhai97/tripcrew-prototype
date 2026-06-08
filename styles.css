@@ -439,13 +439,22 @@ p {
   margin-bottom: 18px;
 }
 
+.timeline-list {
+  display: grid;
+}
+
 .timeline-item {
   display: grid;
-  grid-template-columns: 58px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 34px 58px 1fr auto;
+  gap: 10px;
   align-items: start;
   padding: 13px 0;
   border-bottom: 1px solid var(--line);
+  touch-action: none;
+  transition:
+    background 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
 }
 
 .timeline-item:last-child {
@@ -472,6 +481,29 @@ p {
 
 .timeline-item.dimmed {
   opacity: 0.72;
+}
+
+.timeline-item.dragging {
+  opacity: 0.58;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 28px rgba(16, 20, 47, 0.12);
+}
+
+.drag-handle {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: white;
+  color: var(--muted);
+  font-weight: 900;
+  line-height: 1;
+  cursor: grab;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
 }
 
 .risk {

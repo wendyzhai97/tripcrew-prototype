@@ -84,9 +84,11 @@
           <section class="timeline">
             <div class="section-heading">
               <h2>Today’s plan</h2>
-              <span>Fri, May 16</span>
+              <span>Drag to reorder</span>
             </div>
-            <article class="timeline-item">
+            <div class="timeline-list" aria-label="Draggable itinerary items">
+            <article class="timeline-item" data-itinerary-item>
+              <button class="drag-handle" type="button" aria-label="Drag Cafe and breakfast in Roma">↕</button>
               <time>10:00</time>
               <div>
                 <h3>Cafe & breakfast in Roma</h3>
@@ -94,7 +96,8 @@
               </div>
               <span class="cost">$18</span>
             </article>
-            <article class="timeline-item">
+            <article class="timeline-item" data-itinerary-item>
+              <button class="drag-handle" type="button" aria-label="Drag Walk and street art in Condesa">↕</button>
               <time>12:00</time>
               <div>
                 <h3>Walk & street art in Condesa</h3>
@@ -102,7 +105,8 @@
               </div>
               <span class="cost">$0</span>
             </article>
-            <article class="timeline-item dimmed">
+            <article class="timeline-item dimmed" data-itinerary-item>
+              <button class="drag-handle" type="button" aria-label="Drag Museum block">↕</button>
               <time>14:30</time>
               <div>
                 <h3>Museum block</h3>
@@ -110,6 +114,7 @@
               </div>
               <span class="risk">Maybe</span>
             </article>
+            </div>
           </section>
 
           <article class="budget-card">

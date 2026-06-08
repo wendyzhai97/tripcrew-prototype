@@ -16,6 +16,7 @@ Reference direction: hybrid of the generated chat-first adaptive itinerary conce
 - Plan cards, reactions, budget choices, and low-power check-in toggle respond to clicks.
 - Invite, nudge, meetup, check-in, menu, and settlement draft controls now provide prototype feedback.
 - Settlement draft modal verified from the Budget screen.
+- Today itinerary now includes touch-friendly drag handles for reordering itinerary items.
 - Browser console checked for errors.
 
 ## Notes

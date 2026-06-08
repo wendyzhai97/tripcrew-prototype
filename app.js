@@ -97,6 +97,67 @@ document.querySelectorAll(".choice").forEach((choice) => {
   });
 });
 
+const timelineList = document.querySelector(".timeline-list");
+let draggedItem = null;
+
+function getTimelineInsertTarget(y) {
+  const items = [...timelineList.querySelectorAll("[data-itinerary-item]:not(.dragging)")];
+  return items.reduce(
+    (closest, item) => {
+      const box = item.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, item };
+      }
+      return closest;
+    },
+    { offset: Number.NEGATIVE_INFINITY, item: null },
+  ).item;
+}
+
+function renumberTimeline() {
+  const times = ["10:00", "12:00", "14:30"];
+  timelineList.querySelectorAll("[data-itinerary-item]").forEach((item, index) => {
+    item.querySelector("time").textContent = times[index] || "";
+  });
+}
+
+timelineList.querySelectorAll("[data-itinerary-item]").forEach((item) => {
+  const handle = item.querySelector(".drag-handle");
+
+  handle.addEventListener("pointerdown", (event) => {
+    draggedItem = item;
+    draggedItem.classList.add("dragging");
+    handle.setPointerCapture(event.pointerId);
+    showToast("Drag the itinerary item into a new spot.");
+  });
+
+  handle.addEventListener("pointermove", (event) => {
+    if (!draggedItem) return;
+    const target = getTimelineInsertTarget(event.clientY);
+    if (target) {
+      timelineList.insertBefore(draggedItem, target);
+    } else {
+      timelineList.appendChild(draggedItem);
+    }
+  });
+
+  handle.addEventListener("pointerup", () => {
+    if (!draggedItem) return;
+    const movedTitle = draggedItem.querySelector("h3").textContent;
+    draggedItem.classList.remove("dragging");
+    draggedItem = null;
+    renumberTimeline();
+    showToast(`${movedTitle} moved. Times adjusted for the prototype.`);
+  });
+
+  handle.addEventListener("pointercancel", () => {
+    if (!draggedItem) return;
+    draggedItem.classList.remove("dragging");
+    draggedItem = null;
+  });
+});
+
 const profileList = document.querySelector(".profile-list");
 
 travelers.forEach((traveler) => {
